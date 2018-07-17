@@ -11,6 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::redirect('/','blog');
+
+Auth::routes();
+
+//Web
+Route::get('blog', 'Web\PageController@blog')->name('blog');
+Route::get('blog/{slug}','Web\PageController@post')->name('post');
+Route::get('category/{slug}','Web\PageController@category')->name('category');
+Route::get('tag/{slug}','Web\PageController@tag')->name('tag');
+
+//admin
