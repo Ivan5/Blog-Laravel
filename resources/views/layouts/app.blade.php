@@ -14,7 +14,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="ns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
@@ -80,9 +80,38 @@
             </div>
         </nav>
 
+            @if(session('info'))
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-8 col-md-offset-2">
+                    <div class="alert alert-success">
+                      {{ session('info') }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            @endif
 
+            @if(count($errors))
+              <div class="container">
+                <div class="row">
+                  <div class="col-md-8 col-md-offset-2">
+                    <div class="alert alert-danger">
+                      <ul>
+                        @foreach($errors->all() as $error)
+                          <li>{{ $error }}</li>
+                        @endforeach
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            @endif
             @yield('content')
 
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/speakingurl/14.0.1/speakingurl.min.js" charset="utf-8"></script>
+    
+    @yield('scripts')
 </body>
 </html>
