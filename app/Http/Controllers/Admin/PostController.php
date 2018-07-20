@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\PostUpdateRequest;
+
+use Illuminate\Support\Facades\Storage;
+
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Category;
@@ -51,6 +54,15 @@ class PostController extends Controller
     {
         //
         $post = Post::create($request->all());
+
+        //image
+        if($request->file('file')){
+            $path = Storage::disk('public')->put('image',$request->file('file'));
+            $post->fill(['file' => asset($path)])->save();
+        }
+        //Tags
+        $post->tags()->sync($request->get('tags'));
+
         return redirect()->route('posts.edit', $post->id)->with('info','Post creada con exito');
     }
 
@@ -96,8 +108,17 @@ class PostController extends Controller
         //
         $post = Post::find($id);
         $post->fill($request->all())->save();
-        return redirect()->route('posts.edit', $post->id)->with('info','Post actualizada con exito');
 
+
+        //image
+        if($request->file('file')){
+            $path = Storage::disk('public')->put('image',$request->file('file'));
+            $post->fill(['file' => asset($path)])->save();
+        }
+        //Tags
+        $post->tags()->sync($request->get('tags'));
+
+        return redirect()->route('posts.edit', $post->id)->with('info','Post actualizado con exito');
     }
 
     /**
