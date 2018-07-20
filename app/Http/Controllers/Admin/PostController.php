@@ -89,9 +89,10 @@ class PostController extends Controller
     public function edit($id)
     {
         //
+        $post = Post::find($id);
+        $this->authorize('pass',$post);
         $categories = Category::orderBy('name','ASC')->pluck('name','id');
         $tags = Tag::orderBy('name','ASC')->get();
-        $post = Post::find($id);
 
         return view('admin.posts.edit',compact('post','categories','tags'));
     }
@@ -107,6 +108,7 @@ class PostController extends Controller
     {
         //
         $post = Post::find($id);
+        $this->authorize('pass',$post);
         $post->fill($request->all())->save();
 
 
@@ -130,6 +132,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+          $post = Post::find($id);
+        $this->authorize('pass',$post);
         Post::find($id)->delete();
 
         return back()->with('info',"Eliminado correctamente");
