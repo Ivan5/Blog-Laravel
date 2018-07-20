@@ -36,7 +36,7 @@
 </div>
 <div class="form-group">
   {{ Form::label('excerpt', 'Extracto') }}
-  {{ Form::textarea('body',null,['class' => 'form-control', 'rows' => '2']) }}
+  {{ Form::textarea('excerpt',null,['class' => 'form-control', 'rows' => '2']) }}
 
 </div>
 <div class="form-group">
@@ -49,6 +49,7 @@
 </div>
 
 @section('scripts')
+  <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
   <script>
     $(document).ready(function(){
         $("#name, #slug").stringToSlug({
@@ -57,5 +58,7 @@
           }
         });
     });
+
+  
   </script>
 @endsection
